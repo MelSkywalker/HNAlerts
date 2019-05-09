@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MelSkywalker/HNAlerts/issues"
   },
-  "homepage": "https://github.com/MelSkywalker/HNAlerts#readme"
+  "homepage": "https://github.com/MelSkywalker/HNAlerts#readme",
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
 }
