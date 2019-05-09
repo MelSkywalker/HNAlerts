@@ -18,5 +18,10 @@
   "homepage": "https://github.com/MelSkywalker/HNAlerts#readme",
   "devDependencies": {
     "jest": "^24.8.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "request": "^2.88.0",
+    "twitter": "^1.7.1"
   }
 }
