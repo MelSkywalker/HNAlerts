@@ -1,0 +1,19 @@
+{
+  "name": "hnalerts",
+  "version": "1.0.0",
+  "description": "librería que manda notificaciones vía twitter de las noticias publicadas en HackNew de los temas de interés de los usuarios",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelSkywalker/HNAlerts.git"
+  },
+  "author": "MelSkywalker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MelSkywalker/HNAlerts/issues"
+  },
+  "homepage": "https://github.com/MelSkywalker/HNAlerts#readme"
+}
