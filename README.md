@@ -1,6 +1,6 @@
 ## HNAlerts
 
-La usuaria está interesada en recibir notificaciones a través de Twitter de ciertos temas en específico que aparecen en https://news.ycombinator.com/, por ejemplo si en las últimas 2 horas hubo una noticia sobre Facebook, la usuaria está interesada en recibir un “at-message” (ej: @usuaria Última noticia sobre Facebook: https://liga-a-noticia)
+La usuaria está interesada en recibir notificaciones a través de Twitter de ciertos temas en específico que aparecen en [Hacker News](https://news.ycombinator.com/), por ejemplo si en las últimas 2 horas hubo una noticia sobre Facebook, la usuaria está interesada en recibir un “at-message” (ej: @usuaria Última noticia sobre Facebook: https://liga-a-noticia)
 
 Los temas en los cuales la usuaria está interesada se definirán a través de un argumento del terminal.
 
