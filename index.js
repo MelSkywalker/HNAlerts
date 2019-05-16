@@ -7,6 +7,7 @@ const config = require('./config');
 const url = 'https://news.ycombinator.com/news';
 const url1 = 'https://hn.algolia.com/?query=';
 const url2 = '&sort=byPopularity&prefix&page=0&dateRange=all&type=story';
+const user = ' @mel_quote';
 
 const twitter = new Twitter(config);
 
@@ -33,26 +34,41 @@ const filteredNotes = res => {
 };
 
 const getLink = notes => {
-    return notes.forEach(note => {
-       return note.link;
-    });
+    return notes[0].link;
+    // return notes.map(note => {
+    //    return note.link;
+    // });
 };
 
 const tweetResult = (res) => {
-    return twitter.post('statuses/update', {status: res + ' @mel_quote'}, (error, tweet, response) => {
-        // if (error) throw error;
-        console.log(error);
-        console.log(tweet);
-        // console.log(response);
-    });
+    return new Promise(function (resolve, reject) {
+        twitter.post('statuses/update', {status: res + user}, (function(error, tweet, response) {
+            if(error !== null) {
+                reject(error);
+            }
+            resolve(tweet);
+        }))
+    })
 };
+
+const showErrors = (error) => {
+    console.error(error);
+};
+// const tweetResult = (res) => {
+//     return twitter.post('statuses/update', {status: res + ' @mel_quote'}, (error, tweet, response) => {
+//         // if (error) throw error;
+//         console.log(error);
+//         console.log(tweet);
+//         // console.log(response);
+//     });
+// };
 
 getNews()
 .then(applyCheerio)
 .then(filteredNotes)
 .then(getLink)
 .then(tweetResult)
-// .catch(showErrors);
+.catch(showErrors);
 
 // twitter.post('statuses/update', res, function(error, tweet, response){
 //     return new Promise((resolve, reject) => {
