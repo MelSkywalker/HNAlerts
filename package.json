@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/MelSkywalker/HNAlerts#readme",
   "devDependencies": {
+    "dotenv": "^8.0.0",
     "jest": "^24.8.0"
   },
   "dependencies": {

@@ -1,15 +1,25 @@
+require('dotenv').config();
+const fs = require('fs');
 const request = require('request');
 const cheerio = require('cheerio');
 const Twitter = require('twitter');
 const fetch = require('node-fetch');
-const config = require('./config');
+// const config = require('./config');
 
 const url = 'https://news.ycombinator.com/news';
 const url1 = 'https://hn.algolia.com/?query=';
 const url2 = '&sort=byPopularity&prefix&page=0&dateRange=all&type=story';
 const user = ' @mel_quote';
 
-const twitter = new Twitter(config);
+const twitter = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_COMSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+console.log(process.env);
+// const twitter = new Twitter(config);
 
 function getNews(topic) {
     return fetch(`${url}`)
@@ -35,14 +45,11 @@ const filteredNotes = res => {
 
 const getLink = notes => {
     return notes[0].link;
-    // return notes.map(note => {
-    //    return note.link;
-    // });
 };
 
 const tweetResult = (res) => {
     return new Promise(function (resolve, reject) {
-        twitter.post('statuses/update', {status: res + user}, (function(error, tweet, response) {
+        twitter.post('statuses/update', {status: user + ' Última noticia de Google: ' + res}, (function(error, tweet, response) {
             if(error !== null) {
                 reject(error);
             }
@@ -54,14 +61,6 @@ const tweetResult = (res) => {
 const showErrors = (error) => {
     console.error(error);
 };
-// const tweetResult = (res) => {
-//     return twitter.post('statuses/update', {status: res + ' @mel_quote'}, (error, tweet, response) => {
-//         // if (error) throw error;
-//         console.log(error);
-//         console.log(tweet);
-//         // console.log(response);
-//     });
-// };
 
 getNews()
 .then(applyCheerio)
@@ -69,26 +68,3 @@ getNews()
 .then(getLink)
 .then(tweetResult)
 .catch(showErrors);
-
-// twitter.post('statuses/update', res, function(error, tweet, response){
-//     return new Promise((resolve, reject) => {
-//         if(error){
-//             reject(error);
-//         }
-//         resolve(result);
-//     })
-// })
-
-// const tweeted = (error, data, response) => {
-//     if (error) throw error;
-//     else console.log(data);
-// }
-
-// tweet
-// twitter.post((error, result))
-// return new Promise((resolve, reject) => {
-//     if (error) {
-//         reject(error);
-//     }
-//     resolve(result);
-// })
