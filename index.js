@@ -5,14 +5,11 @@ const cheerio = require('cheerio');
 const Twitter = require('twitter');
 const fetch = require('node-fetch');
 const config = require('./config')
-const CronJob = require('cron').CronJob;
+const cron = require('node-cron');
 
 const url = 'https://news.ycombinator.com/news';
 // const url1 = 'https://hn.algolia.com/?query=';
 // const url2 = '&sort=byPopularity&prefix&page=0&dateRange=all&type=story';
-// const user = ' @mel_quote';
-// const user_id = '335746109';
-// const topic = 'Facebook';
 const topic = process.argv[2];
 const user = process.argv[3];
 
@@ -59,14 +56,17 @@ const showErrors = (error) => {
     console.error(error);
 };
 
-const timer = new CronJob('*/10 * * * * *', function() {
-    console.log('Every 10 seconds');
-});
+const cronJob = (res) => {
+    cron.schedule('*/10 * * * * *', function() {
+        console.log('every 10 seconds');
+        tweetResult(res);
+    })
+}
 
 getNews()
 .then(applyCheerio)
 .then(filteredNotes)
 .then(getLink)
 .then(tweetResult)
-.then(timer.start())
+.then(cronJob)
 .catch(showErrors);
