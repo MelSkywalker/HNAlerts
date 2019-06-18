@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "cron": "^1.7.1",
     "node-fetch": "^2.5.0",
     "request": "^2.88.0",
-    "twitter": "^1.7.1",
-    "twitter-screen-name": "^1.0.0"
+    "twitter": "^1.7.1"
   }
 }
