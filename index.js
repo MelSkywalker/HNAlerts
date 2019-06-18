@@ -3,8 +3,8 @@ const fs = require('fs');
 const request = require('request');
 const cheerio = require('cheerio');
 const Twitter = require('twitter');
+const twitterScreenName = require('twitter-screen-name');
 const fetch = require('node-fetch');
-// const config = require('./config');
 
 const url = 'https://news.ycombinator.com/news';
 const url1 = 'https://hn.algolia.com/?query=';
@@ -18,8 +18,6 @@ const twitter = new Twitter({
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-console.log(process.env);
-// const twitter = new Twitter(config);
 
 function getNews(topic) {
     return fetch(`${url}`)
@@ -58,6 +56,68 @@ const tweetResult = (res) => {
     })
 };
 
+const sendIt = (res) => {
+    return new Promise(function(resolve, reject) {
+        twitter.post('direct_messages/events/new', {
+                "event": {
+                  "type": "message_create",
+                  "message_create": {
+                    "target": {
+                      "recipient_id": "335746109"
+                    },
+                    "message_data": {
+                      "text": "Hello World!",
+                    }
+                  }
+                }
+        }, function(error, message, response){
+            if(error !== null) {
+                reject(error);
+            }
+            resolve(message);
+        })
+    })
+}
+
+const sendMessage = (res) => {
+    const writeTo = {
+        screen_name: 'mel_quote',
+        text: res
+    }
+    return new Promise(function(resolve, reject) {
+        twitter.post('direct_messages/new', writeTo, function(error, message, response) {
+            if(error !== null) {
+                reject(error);
+            }
+            resolve(message);
+        })
+    })
+}
+
+const sendDM = (res) => {
+    const writeTo = {
+        "event": {
+            "type": "message_create",
+            "message_create": {
+                "target": {
+                    "recipient_id": "335746109"
+                },
+                "message_data": {
+                    "text": res,
+                }
+            }
+        }
+    }
+    return new Promise(function(resolve, reject){
+        twitter.post('direct_messages/events/new', writeTo, function(error, message, response) {
+            if(error !== null) {
+                reject(error);
+            }
+            resolve(message)
+        })
+    })
+}
+
 const showErrors = (error) => {
     console.error(error);
 };
@@ -67,4 +127,5 @@ getNews()
 .then(filteredNotes)
 .then(getLink)
 .then(tweetResult)
+.then(sendIt)
 .catch(showErrors);
