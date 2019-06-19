@@ -41,9 +41,11 @@ const getLink = notes => {
     return notes[0].link;
 };
 
+
 const tweetResult = (res) => {
+    console.log('tweetResult');
     return new Promise(function (resolve, reject) {
-        twitter.post('statuses/update', {status: `@${user} Última noticia de #${topic}: ${res} `}, (function(error, tweet, response) {
+        twitter.post('statuses/update', {status: `¡Hola @${user} ! Esta es la última noticia de #${topic}: ${res} `}, (function(error, tweet, response) {
             if(error !== null) {
                 reject(error);
             }
@@ -56,17 +58,20 @@ const showErrors = (error) => {
     console.error(error);
 };
 
-const cronJob = (res) => {
-    cron.schedule('*/10 * * * * *', function() {
-        console.log('every 10 seconds');
-        tweetResult(res);
+const tweetNews = () => {
+    getNews()
+        .then(applyCheerio)
+        .then(filteredNotes)
+        .then(getLink)
+        .then(tweetResult)
+        .catch(showErrors);
+}
+
+const cronNews = () => {
+    tweetNews();
+    cron.schedule('0 0 */1 * * *', function() {
+        tweetNews();
     })
 }
 
-getNews()
-.then(applyCheerio)
-.then(filteredNotes)
-.then(getLink)
-.then(tweetResult)
-.then(cronJob)
-.catch(showErrors);
+cronNews();
