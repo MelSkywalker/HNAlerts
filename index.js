@@ -1,6 +1,4 @@
 require('dotenv').config();
-// const fs = require('fs');
-// const request = require('request');
 const cheerio = require('cheerio');
 const Twitter = require('twitter');
 const fetch = require('node-fetch');
@@ -8,10 +6,13 @@ const config = require('./config')
 const cron = require('node-cron');
 
 const url = 'https://news.ycombinator.com/news';
-// const url1 = 'https://hn.algolia.com/?query=';
-// const url2 = '&sort=byPopularity&prefix&page=0&dateRange=all&type=story';
 const topic = process.argv[2];
 const user = process.argv[3];
+
+const userExists = (u) => {
+    if (u) return `@${u} `;
+    else return '';
+}
 
 const twitter = new Twitter(config);
 
@@ -43,13 +44,12 @@ const getLink = notes => {
 
 
 const tweetResult = (res) => {
-    console.log('tweetResult');
     return new Promise(function (resolve, reject) {
-        twitter.post('statuses/update', {status: `¡Hola @${user} ! Esta es la última noticia de #${topic}: ${res} `}, (function(error, tweet, response) {
+        twitter.post('statuses/update', {status: `¡Hola${(userExists(user))}! Esta es la última noticia de #${topic}: ${res} `}, (function(error, tweet, response) {
             if(error !== null) {
                 reject(error);
             }
-            resolve(tweet);
+            resolve(tweet, console.log('Tweeted!'));
         }))
     })
 };
@@ -69,7 +69,7 @@ const tweetNews = () => {
 
 const cronNews = () => {
     tweetNews();
-    cron.schedule('0 0 */1 * * *', function() {
+    cron.schedule('0 */3 * * *', function() {
         tweetNews();
     })
 }

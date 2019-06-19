@@ -13,5 +13,4 @@ Usar:
 [Cheerio](https://www.npmjs.com/package/cheerio)
 
 ## ¿Cómo usarlo?
-
 node index topic user
