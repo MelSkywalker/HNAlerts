@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "lodash.flatten": "^4.4.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.5.0",
     "request": "^2.88.0",
