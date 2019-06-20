@@ -11,3 +11,6 @@ En una segunda iteración el programa podrá seguir corriendo una vez empezado y
 Usar:
 [Twitter](https://www.npmjs.com/package/twitter)
 [Cheerio](https://www.npmjs.com/package/cheerio)
+
+## ¿Cómo usarlo?
+node index topic user
