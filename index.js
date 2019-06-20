@@ -6,6 +6,7 @@ const configGoogle = require('./configGoogle')
 const configFb = require('./configFb');
 const cron = require('node-cron');
 const flatten = require('lodash.flatten');
+const intersection = require('lodash.intersection');
 
 const url = 'https://news.ycombinator.com/news';
 const topics = ['Google', 'Firefox'];
@@ -40,6 +41,13 @@ const filterNotes = (news, topics) => flatten(topics.map(topic => {
     return news.filter(note => note.title.includes(topic)).map(note => ({...note, topic}));
 }));
 
+const compareNotes = (notes) => {
+    // return newNews.filter(note => note.title !== prevNews.includes(note.title));
+    const newNotes = notes.filter(note => note.title !== prevNews.map(note => note.title));
+    prevNews.push(...newNotes);
+    return newNotes;
+}
+
 const tweetNotes = (notes) => {
     return notes.map(note => console.log(note.topic) || new Promise(function(resolve, reject) {
         twitters[note.topic].post('statuses/update', {status: `#hn${note.topic}Alerts Esta es la última noticia de #${note.topic}: ${note.link}`}, (function(error, tweet, response) {
@@ -65,8 +73,9 @@ const tweetNews = () => {
     getNews()
         .then(applyCheerio)
         .then(handleGoogleNotes)
-        .then(tweetNotes)
-        .then((res) => (Promise.all(res)))
+        .then(compareNotes)
+        // .then(tweetNotes)
+        // .then((res) => (Promise.all(res)))
         .catch(showErrors);
 }
 
