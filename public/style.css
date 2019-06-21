@@ -1,0 +1,10 @@
+body {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+
+.github_icon {
+    height: 3em;
+    width: auto;
+}

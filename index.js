@@ -9,7 +9,7 @@ const flatten = require('lodash.flatten');
 const differenceBy = require('lodash.differenceby');
 
 const url = 'https://news.ycombinator.com/news';
-const topics = ['Google', 'Firefox'];
+const topics = ['Google', 'Facebook'];
 const prevNews = [];
 
 // const twitter = new Twitter(configGoogle);
@@ -18,7 +18,7 @@ const twitterFacebook = new Twitter(configFb);
 
 const twitters = {
     Google: twitterGoogle,
-    Firefox: twitterFacebook
+    Facebook: twitterFacebook
 }
 
 function getNews() {
@@ -77,7 +77,7 @@ const tweetNews = () => {
 
 const cronNews = () => {
     tweetNews();
-    cron.schedule('*/1 * * * *', function() {
+    cron.schedule('0 */1 * * *', function() {
         tweetNews();
     })
 }
