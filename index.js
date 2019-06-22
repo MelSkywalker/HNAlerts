@@ -50,7 +50,7 @@ const checkNews = (notes) => {
 
 const tweetNotes = (notes) => {
     return notes.map(note => new Promise(function(resolve, reject) {
-        twitters[note.topic].post('statuses/update', {status: `#hn${note.topic}Alerts Esta es la última noticia de #${note.topic}: ${note.link}`}, (function(error, tweet, response) {
+        twitters[note.topic].post('statuses/update', {status: `#hn${note.topic}Alerts Latest news about #${note.topic}: ${note.link}`}, (function(error, tweet, response) {
             if(error !== null) {
                 reject(error);
             }
