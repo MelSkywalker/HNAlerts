@@ -48,8 +48,7 @@ const checkNews = (notes) => {
 }
 
 const tweetNotes = (notes) => {
-    console.log('notes: ', notes);
-    return notes.map(note => console.log(note.topic) || new Promise(function(resolve, reject) {
+    return notes.map(note => new Promise(function(resolve, reject) {
         twitters[note.topic].post('statuses/update', {status: `#hn${note.topic}Alerts Esta es la última noticia de #${note.topic}: ${note.link}`}, (function(error, tweet, response) {
             if(error !== null) {
                 reject(error);
@@ -76,9 +75,9 @@ const tweetNews = () => {
 }
 
 const cronNews = () => {
-    tweetNews();
-    cron.schedule('0 */1 * * *', function() {
+    cron.schedule('*/30 * * * *', function() {
         tweetNews();
+        console.log('Run cronNews');
     })
 }
 

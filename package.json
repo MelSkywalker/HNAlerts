@@ -4,7 +4,8 @@
   "description": "librería que manda notificaciones vía twitter de las noticias publicadas en HackNew de los temas de interés de los usuarios",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
   },
   "repository": {
     "type": "git",
