@@ -78,7 +78,7 @@ const cronNews = () => {
     tweetNews();
     cron.schedule('*/30 * * * *', function() {
         tweetNews();
-        console.log('Run cronNews');
+        console.log('Run cronNews after cron');
     })
 }
 
