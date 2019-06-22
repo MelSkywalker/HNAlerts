@@ -79,7 +79,16 @@ const cronNews = () => {
     tweetNews();
     cron.schedule('0 */1 * * *', function() {
         tweetNews();
+        console.log('prevNews: ', prevNews);
         console.log('Run cronNews after cron');
+    })
+}
+
+const cronClean = () => {
+    cron.schedule('* * * * Sunday', function() {
+        prevNews = [];
+        console.log('prevNews: ', prevNews);
+
     })
 }
 
