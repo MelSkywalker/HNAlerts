@@ -76,20 +76,19 @@ const tweetNews = () => {
 }
 
 const cronNews = () => {
-    tweetNews();
     cron.schedule('0 */1 * * *', function() {
         tweetNews();
-        console.log('prevNews: ', prevNews);
-        console.log('Run cronNews after cron');
+        console.log('CRON NEWS');
     })
 }
 
 const cronClean = () => {
-    cron.schedule('* * * * Sunday', function() {
-        prevNews = [];
-        console.log('prevNews: ', prevNews);
-
+    cron.schedule('0 0 * * Sunday', function() {
+        console.log('BEFORE cronClean', prevNews);
+        prevNews.length = 0;
+        console.log('CRON CLEAN', prevNews);
     })
 }
 
 cronNews();
+cronClean();
