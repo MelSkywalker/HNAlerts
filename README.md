@@ -13,4 +13,9 @@ Usar:
 [Cheerio](https://www.npmjs.com/package/cheerio)
 
 ## ¿Cómo usarlo?
-node index topic user
+node index
+
+##
+[Landing Page](https://melskywalker.github.io/hn-Alerts/)
+[HN Google Alerts](https://twitter.com/hngooglealerts)
+[HN Facebook Alerts](https://twitter.com/hnfbalerts)
